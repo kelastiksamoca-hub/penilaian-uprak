@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- DNS Prefetching untuk mempercepat koneksi ke server Google -->
+    <link rel="dns-prefetch" href="https://docs.google.com">
+    <link rel="preconnect" href="https://docs.google.com">
     <title>Dashboard Penilaian UPRAK 2025/2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -53,7 +56,7 @@
         }
 
         .modal-overlay {
-            background: rgba(2, 6, 23, 0.9);
+            background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(12px);
             display: none;
             opacity: 0;
@@ -65,13 +68,17 @@
             opacity: 1;
         }
 
+        /* Penyesuaian lebar iframe agar lebih kecil dan proporsional */
         .iframe-container {
-            width: 95vw;
+            width: 80vw; /* Diperkecil dari 95vw ke 80vw */
+            max-width: 1000px; /* Batas maksimal lebar agar tidak terlalu lebar di layar besar */
             height: 85vh;
             border-radius: 1.5rem;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            background: #1e293b;
         }
 
         /* Custom Scrollbar */
@@ -121,12 +128,12 @@
 
     <!-- Grid Kartu Mata Pelajaran -->
     <div id="subject-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        <!-- Content generated via JavaScript -->
+        <!-- Konten dihasilkan melalui JavaScript -->
     </div>
 
     <!-- Modal Fullscreen Iframe -->
     <div id="modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center p-4">
-        <div class="relative w-full max-w-7xl">
+        <div class="relative">
             <!-- Modal Header -->
             <div class="absolute -top-14 left-0 right-0 flex justify-between items-center px-2">
                 <div class="flex items-center gap-3">
@@ -141,12 +148,12 @@
             </div>
             
             <!-- Iframe Container -->
-            <div class="iframe-container bg-slate-900">
+            <div class="iframe-container">
                 <div id="loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10">
                     <div class="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin shadow-[0_0_15px_rgba(6,182,212,0.3)]"></div>
-                    <p class="mt-4 text-cyan-400 font-bold tracking-widest animate-pulse">MENYINKRONKAN DATA...</p>
+                    <p class="mt-4 text-cyan-400 font-bold tracking-widest animate-pulse uppercase">Memuat Data Cepat...</p>
                 </div>
-                <iframe id="sheet-iframe" src="" class="w-full h-full border-0" onload="hideLoading()"></iframe>
+                <iframe id="sheet-iframe" src="" class="w-full h-full border-0" style="display: block; background-color: white;" onload="hideLoading()"></iframe>
             </div>
         </div>
     </div>
@@ -216,16 +223,17 @@
             title.innerText = sub.name;
             iconBox.innerHTML = `<i class="fas ${sub.icon}"></i>`;
             
-            // Optimasi Kecepatan: Menggunakan param 'rm=minimal' dan 'gridlines=false'
-            // Mengambil ID Sheet dari link asli
             const sheetIdMatch = sub.link.match(/\/d\/(.*?)(\/|$)/);
             const sheetId = sheetIdMatch ? sheetIdMatch[1] : "";
-            
-            // Link yang dioptimasi untuk iframe agar lebih ringan dan cepat
-            const fastLink = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?rm=minimal&ui=2&chrome=false&widget=true`;
+            const optimizedLink = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?rm=minimal&ui=2&chrome=false&widget=true`;
             
             spinner.style.display = 'flex';
-            iframe.src = fastLink;
+            iframe.src = "about:blank";
+            
+            setTimeout(() => {
+                iframe.src = optimizedLink;
+            }, 50);
+
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -234,18 +242,18 @@
             const modal = document.getElementById('modal');
             const iframe = document.getElementById('sheet-iframe');
             modal.classList.remove('active');
-            iframe.src = '';
+            iframe.src = ''; 
             document.body.style.overflow = 'auto';
         }
 
         function hideLoading() {
-            document.getElementById('loading-spinner').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('loading-spinner').style.display = 'none';
+            }, 300);
         }
 
-        // Initialize
         renderCards();
 
-        // Keyboard support
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
         });
