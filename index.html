@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Penilaian UPRAK 2025/2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-purple: #bc13fe;
+            --dark-bg: #0f172a;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(188, 19, 254, 0.05) 0px, transparent 50%);
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .neon-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .neon-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .search-input {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+
+        .modal-overlay {
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(12px);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .iframe-container {
+            width: 95vw;
+            height: 85vh;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-blue);
+        }
+
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
+            to { text-shadow: 0 0 20px rgba(0, 242, 255, 0.5), 0 0 30px rgba(0, 242, 255, 0.3); }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <!-- Header Section -->
+    <header class="max-w-7xl mx-auto text-center mb-12">
+        <div class="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4 text-cyan-400 text-sm font-semibold tracking-wider">
+            TAHUN PELAJARAN 2025 / 2026
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+            Dashboard Penilaian <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 animate-glow">UPRAK</span>
+        </h1>
+        
+        <!-- Kotak Pencarian -->
+        <div class="max-w-md mx-auto relative group">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition"></i>
+            <input type="text" id="search-bar" placeholder="Cari mata pelajaran..." 
+                class="search-input w-full pl-12 pr-4 py-4 rounded-2xl text-lg"
+                onkeyup="filterSubjects()">
+        </div>
+    </header>
+
+    <!-- Grid Kartu Mata Pelajaran -->
+    <div id="subject-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+        <!-- Content generated via JavaScript -->
+    </div>
+
+    <!-- Modal Fullscreen Iframe -->
+    <div id="modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center p-4">
+        <div class="relative w-full max-w-7xl">
+            <!-- Modal Header -->
+            <div class="absolute -top-14 left-0 right-0 flex justify-between items-center px-2">
+                <div class="flex items-center gap-3">
+                    <div id="modal-icon" class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-slate-900 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h2 id="modal-title" class="text-xl font-bold text-white uppercase tracking-wider">Input Nilai</h2>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 bg-white/10 hover:bg-red-500/50 text-white rounded-full flex items-center justify-center transition border border-white/20">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Iframe Container -->
+            <div class="iframe-container bg-slate-900">
+                <div id="loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10">
+                    <div class="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin shadow-[0_0_15px_rgba(6,182,212,0.3)]"></div>
+                    <p class="mt-4 text-cyan-400 font-bold tracking-widest animate-pulse">MENYINKRONKAN DATA...</p>
+                </div>
+                <iframe id="sheet-iframe" src="" class="w-full h-full border-0" onload="hideLoading()"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const subjects = [
+            { name: "Pendidikan Agama Katolik", task: "Mendoakan doa 'Aku Percaya'", link: "https://docs.google.com/spreadsheets/d/11sn1_fhlPbUwR1weAz7-_ZP7Wpaadyshb0p7QPimREo", icon: "fa-cross", color: "text-indigo-400" },
+            { name: "Pendidikan Pancasila", task: "Menggambar peta kota", link: "https://docs.google.com/spreadsheets/d/1K5jF2jiV9vBoar2UJlqCoMCCW6enCk5E6l4n-FLE_ME", icon: "fa-map-marked-alt", color: "text-red-400" },
+            { name: "Bahasa Indonesia", task: "Menulis teks dan berpidato (Kelestarian Alam)", link: "https://docs.google.com/spreadsheets/d/1CqGG_ScNIO7SsbSHN1K7HpR_z9QC9NeAgixfDID_RbM", icon: "fa-microphone-alt", color: "text-orange-400" },
+            { name: "Matematika", task: "Mengontruksi bangun ruang", link: "https://docs.google.com/spreadsheets/d/1DaltOdixaVWm_uPZ4b_mR537VyP5lU7DPmrolvOH_Gg", icon: "fa-shapes", color: "text-blue-400" },
+            { name: "IPAS", task: "Membuat model gerhana Matahari dan Bulan", link: "https://docs.google.com/spreadsheets/d/1EJZ7-8EEyv1p83Tu5Mx3Co3uYupzC0HtVKOk-VjzNTI", icon: "fa-globe-asia", color: "text-emerald-400" },
+            { name: "Seni Musik", task: "Menampilkan lagu dengan alat musik", link: "https://docs.google.com/spreadsheets/d/1NkEA3EaQPVcW4qByJ3VBk_5b3Ge3Es9baHjGnA5dRHM", icon: "fa-music", color: "text-purple-400" },
+            { name: "Seni Rupa", task: "Berkarya dengan barang bekas", link: "https://docs.google.com/spreadsheets/d/1AlVU5weLiBkkgYRZ9i3aU0RDYVtS7pDJTaa9JQ-maTM", icon: "fa-palette", color: "text-pink-400" },
+            { name: "Seni Tari", task: "Pagelaran Tari Rebana", link: "https://docs.google.com/spreadsheets/d/1TGiQ_6Vq19Bug0ZZxSygzYUOCmVDfbierPiuzfc8u4Y", icon: "fa-user-friends", color: "text-rose-400" },
+            { name: "PJOK", task: "Senam kreasi", link: "https://docs.google.com/spreadsheets/d/1Ree9MglUWAD5Li35t9-m1gntX6ghZTgsjCLsuGkD7sc", icon: "fa-running", color: "text-green-400" },
+            { name: "Bahasa Inggris", task: "Telling Future Dream", link: "https://docs.google.com/spreadsheets/d/1GfFEwyV2_T8gYbf9SzgmHSkNcR4EzWwKWPCWLD_4pdE", icon: "fa-language", color: "text-yellow-400" },
+            { name: "Bahasa Sunda", task: "Biantara", link: "https://docs.google.com/spreadsheets/d/1KJTGiyB3zkhcOchS3t7XGwonf8j7GxvuZIBHippwk2Y", icon: "fa-landmark", color: "text-teal-400" },
+            { name: "Informatika", task: "Membuat aplikasi menggunakan SCRATCH", link: "https://docs.google.com/spreadsheets/d/1SYhhOT9NpxwIJN0H6cmXdSDybERX55OKXHXT9pB2-Eo", icon: "fa-laptop-code", color: "text-slate-400" }
+        ];
+
+        function renderCards(filter = "") {
+            const grid = document.getElementById('subject-grid');
+            grid.innerHTML = "";
+            
+            const filtered = subjects.filter(s => 
+                s.name.toLowerCase().includes(filter.toLowerCase()) || 
+                s.task.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            filtered.forEach(sub => {
+                const card = document.createElement('div');
+                card.className = `neon-card p-6 rounded-[2rem] flex flex-col justify-between cursor-pointer group`;
+                card.onclick = () => openModal(sub);
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 border border-white/10 group-hover:border-cyan-500/50 transition">
+                            <i class="fas ${sub.icon} ${sub.color} text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3 leading-tight group-hover:text-cyan-400 transition">${sub.name}</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                            <span class="font-bold block text-slate-500 uppercase text-[10px] tracking-wider mb-1">Materi Uji:</span>
+                            ${sub.task}
+                        </p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-cyan-500 uppercase tracking-[0.2em]">Buka Form</span>
+                        <i class="fas fa-external-link-alt text-xs text-slate-500 group-hover:text-cyan-400 transition"></i>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterSubjects() {
+            const query = document.getElementById('search-bar').value;
+            renderCards(query);
+        }
+
+        function openModal(sub) {
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('sheet-iframe');
+            const title = document.getElementById('modal-title');
+            const iconBox = document.getElementById('modal-icon');
+            const spinner = document.getElementById('loading-spinner');
+
+            title.innerText = sub.name;
+            iconBox.innerHTML = `<i class="fas ${sub.icon}"></i>`;
+            
+            // Optimasi Kecepatan: Menggunakan param 'rm=minimal' dan 'gridlines=false'
+            // Mengambil ID Sheet dari link asli
+            const sheetIdMatch = sub.link.match(/\/d\/(.*?)(\/|$)/);
+            const sheetId = sheetIdMatch ? sheetIdMatch[1] : "";
+            
+            // Link yang dioptimasi untuk iframe agar lebih ringan dan cepat
+            const fastLink = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?rm=minimal&ui=2&chrome=false&widget=true`;
+            
+            spinner.style.display = 'flex';
+            iframe.src = fastLink;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const iframe = document.getElementById('sheet-iframe');
+            modal.classList.remove('active');
+            iframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading-spinner').style.display = 'none';
+        }
+
+        // Initialize
+        renderCards();
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
