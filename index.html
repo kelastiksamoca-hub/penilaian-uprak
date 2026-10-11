@@ -2,261 +2,1119 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- DNS Prefetching untuk mempercepat koneksi ke server Google -->
-    <link rel="dns-prefetch" href="https://docs.google.com">
-    <link rel="preconnect" href="https://docs.google.com">
-    <title>Dashboard Penilaian UPRAK 2025/2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Penilaian Online - SD SANTA MARIA MONICA 2026-2027</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-        
-        :root {
-            --neon-blue: #00f2ff;
-            --neon-purple: #bc13fe;
-            --dark-bg: #0f172a;
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
         }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--dark-bg);
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(188, 19, 254, 0.05) 0px, transparent 50%);
-            color: #f8fafc;
-            min-height: 100vh;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .neon-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
-        .neon-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-            background: rgba(30, 41, 59, 0.9);
+        @keyframes pulseRed {
+            0%, 100% { background-color: rgba(225, 29, 72, 0.95); }
+            50% { background-color: rgba(159, 18, 57, 0.98); }
         }
-
-        .search-input {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            transition: all 0.3s ease;
+        .animate-lockout {
+            animation: pulseRed 1.5s infinite ease-in-out;
         }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
-        }
-
-        .modal-overlay {
-            background: rgba(2, 6, 23, 0.95);
-            backdrop-filter: blur(12px);
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        /* Penyesuaian lebar iframe agar lebih kecil dan proporsional */
-        .iframe-container {
-            width: 80vw; /* Diperkecil dari 95vw ke 80vw */
-            max-width: 1000px; /* Batas maksimal lebar agar tidak terlalu lebar di layar besar */
-            height: 85vh;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-            position: relative;
-            background: #1e293b;
-        }
-
-        /* Custom Scrollbar */
+        /* Custom scrollbar optimization for mobile & tablets */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
+            height: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 10px;
+            background: #cbd5e1;
+            border-radius: 9999px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-blue);
-        }
-
-        .animate-glow {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
-            to { text-shadow: 0 0 20px rgba(0, 242, 255, 0.5), 0 0 30px rgba(0, 242, 255, 0.3); }
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-2 sm:p-4 md:p-6 text-slate-800 antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header Section -->
-    <header class="max-w-7xl mx-auto text-center mb-12">
-        <div class="inline-block px-4 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full mb-4 text-cyan-400 text-sm font-semibold tracking-wider">
-            TAHUN PELAJARAN 2025 / 2026
-        </div>
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-            Dashboard Penilaian <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 animate-glow">UPRAK</span>
-        </h1>
+    <div class="w-full max-w-lg md:max-w-xl lg:max-w-2xl bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100 relative my-auto">
         
-        <!-- Kotak Pencarian -->
-        <div class="max-w-md mx-auto relative group">
-            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition"></i>
-            <input type="text" id="search-bar" placeholder="Cari mata pelajaran..." 
-                class="search-input w-full pl-12 pr-4 py-4 rounded-2xl text-lg"
-                onkeyup="filterSubjects()">
+        <!-- Header Banner -->
+        <div class="bg-gradient-to-r from-indigo-600 via-indigo-700 to-blue-700 p-5 sm:p-6 md:p-7 text-white text-center relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            <div class="absolute -left-6 -top-6 w-24 h-24 bg-blue-400/20 rounded-full blur-xl pointer-events-none"></div>
+            
+            <div class="relative z-10">
+                <span class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider text-indigo-100 mb-2 border border-white/10">
+                    Sistem Penilaian Online
+                </span>
+                <h1 class="text-lg sm:text-2xl font-extrabold tracking-tight leading-snug">SD SANTA MARIA MONICA</h1>
+                <p class="text-xs sm:text-sm text-indigo-100/80 mt-1 font-medium">Tahun Ajaran 2026-2027</p>
+            </div>
         </div>
-    </header>
 
-    <!-- Grid Kartu Mata Pelajaran -->
-    <div id="subject-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        <!-- Konten dihasilkan melalui JavaScript -->
-    </div>
+        <div id="loginPage" class="p-5 sm:p-8 md:p-10 animate-fade-in">
+            <div class="text-center mb-6">
+                <h2 class="text-base sm:text-lg font-bold text-slate-800">Login Peserta Penilaian</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Masukkan Nomor Ujian Contoh: 049-1A-10</p>
+            </div>
 
-    <!-- Modal Fullscreen Iframe -->
-    <div id="modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center p-4">
-        <div class="relative">
-            <!-- Modal Header -->
-            <div class="absolute -top-14 left-0 right-0 flex justify-between items-center px-2">
-                <div class="flex items-center gap-3">
-                    <div id="modal-icon" class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center text-slate-900 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                        <i class="fas fa-book"></i>
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 sm:space-y-5">
+                <div>
+                    <label for="noUjian" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">No Ujian</label>
+                    <div class="relative">
+                        <input type="text" id="noUjian" required placeholder="Ketik No Ujian Anda..." 
+                            class="w-full px-4 py-3 sm:py-3.5 text-sm sm:text-base font-medium border border-slate-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:outline-none transition bg-slate-50/50 focus:bg-white placeholder:text-slate-400"
+                            oninput="checkStudentData()">
+                        <div id="loadingIcon" class="hidden absolute right-3.5 top-3.5 sm:top-4">
+                            <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
                     </div>
-                    <h2 id="modal-title" class="text-xl font-bold text-white uppercase tracking-wider">Input Nilai</h2>
                 </div>
-                <button onclick="closeModal()" class="w-10 h-10 bg-white/10 hover:bg-red-500/50 text-white rounded-full flex items-center justify-center transition border border-white/20">
-                    <i class="fas fa-times"></i>
+
+                <div>
+                    <label for="namaMurid" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Nama Murid (Otomatis)</label>
+                    <input type="text" id="namaMurid" readonly placeholder="Nama terisi otomatis..." 
+                        class="w-full px-4 py-3 sm:py-3.5 text-sm sm:text-base font-semibold border border-slate-200 rounded-2xl bg-slate-100 text-slate-700 cursor-not-allowed">
+                </div>
+
+                <div>
+                    <label for="kelasMurid" class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">Kelas (Otomatis)</label>
+                    <input type="text" id="kelasMurid" readonly placeholder="Kelas terisi otomatis..." 
+                        class="w-full px-4 py-3 sm:py-3.5 text-sm sm:text-base font-semibold border border-slate-200 rounded-2xl bg-slate-100 text-slate-700 cursor-not-allowed">
+                </div>
+
+                <div id="errorMsg" class="text-xs sm:text-sm text-rose-600 font-semibold text-center hidden p-3 bg-rose-50 rounded-xl border border-rose-100"></div>
+
+                <button type="submit" id="btnSubmit" disabled
+                    class="w-full py-3.5 sm:py-4 bg-indigo-600 text-white rounded-2xl font-bold text-sm sm:text-base shadow-lg shadow-indigo-200 hover:bg-indigo-700 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2">
+                    <span id="btnLoginText">Masuk ke Ujian</span>
+                    <div id="loginSpinner" class="hidden animate-spin h-4 w-4 sm:h-5 sm:w-5 border-2 border-white border-t-transparent rounded-full"></div>
+                </button>
+            </form>
+        </div>
+
+        <div id="dashboardPage" class="p-5 sm:p-8 md:p-10 hidden space-y-6 animate-fade-in">
+            <div class="text-center space-y-3">
+                <div class="inline-flex p-3 sm:p-3.5 bg-emerald-100 text-emerald-600 rounded-2xl shadow-inner">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                
+                <h2 class="text-base sm:text-xl font-extrabold text-slate-800 leading-snug">Selamat Datang di Penilaian Online<br><span class="text-indigo-600">SD SANTA MARIA MONICA</span></h2>
+                
+                <div class="bg-indigo-50/70 p-4 sm:p-5 rounded-2xl text-left border border-indigo-100/80 space-y-2.5 text-xs sm:text-sm shadow-sm">
+                    <div class="flex justify-between items-center border-b border-indigo-100 pb-2">
+                        <span class="text-slate-500 font-medium">No Ujian</span>
+                        <span id="dispNo" class="text-indigo-950 font-bold font-mono"></span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-indigo-100 pb-2">
+                        <span class="text-slate-500 font-medium">Nama Murid</span>
+                        <span id="dispNama" class="text-indigo-950 font-bold"></span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-slate-500 font-medium">Kelas</span>
+                        <span id="dispKelas" class="text-indigo-950 font-bold"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <p class="text-[11px] sm:text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Menu Utama Penilaian</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div onclick="openJadwalPage()" class="group bg-gradient-to-br from-indigo-500 to-blue-600 p-4 sm:p-5 rounded-2xl text-white cursor-pointer shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 flex flex-col justify-between active:scale-95">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm sm:text-base">Jadwal Penilaian</h3>
+                            <p class="text-[11px] sm:text-xs text-indigo-100 mt-0.5">Lihat mata pelajaran & tanggal</p>
+                        </div>
+                    </div>
+
+                    <div onclick="openTokenModal()" class="group bg-gradient-to-br from-emerald-500 to-teal-600 p-4 sm:p-5 rounded-2xl text-white cursor-pointer shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 flex flex-col justify-between active:scale-95">
+                        <div class="w-10 h-10 sm:w-11 sm:h-11 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-sm sm:text-base">Soal Penilaian</h3>
+                            <p class="text-[11px] sm:text-xs text-emerald-100 mt-0.5">Mulai kerjakan lembar soal</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center pt-2">
+                <button onclick="handleLogout()" class="text-xs sm:text-sm text-rose-500 hover:text-rose-700 font-semibold inline-block py-1.5 px-4 rounded-xl hover:bg-rose-50 transition">
+                    Keluar / Ganti Akun
                 </button>
             </div>
-            
-            <!-- Iframe Container -->
-            <div class="iframe-container">
-                <div id="loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10">
-                    <div class="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin shadow-[0_0_15px_rgba(6,182,212,0.3)]"></div>
-                    <p class="mt-4 text-cyan-400 font-bold tracking-widest animate-pulse uppercase">Memuat Data Cepat...</p>
+        </div>
+
+        <div id="jadwalPage" class="p-5 sm:p-8 md:p-10 hidden space-y-4 sm:space-y-5 animate-fade-in">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100">
+                <div class="space-y-0.5">
+                    <h2 class="font-extrabold text-slate-800 text-base sm:text-lg flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Jadwal Penilaian
+                    </h2>
+                    <p id="jadwalSubTitle" class="text-xs text-slate-500 font-medium">Daftar mata pelajaran penilaian</p>
                 </div>
-                <iframe id="sheet-iframe" src="" class="w-full h-full border-0" style="display: block; background-color: white;" onload="hideLoading()"></iframe>
+                <button onclick="backToDashboard()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1">
+                    <span>← Kembali</span>
+                </button>
             </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2.5 pt-1">
+                <div class="flex items-center justify-between sm:justify-start gap-2 bg-indigo-50/70 px-3.5 py-2.5 rounded-xl border border-indigo-100/80 w-full sm:w-auto">
+                    <span class="text-xs font-bold text-indigo-900">Filter Aktif:</span>
+                    <span id="activeGradeBadge" class="px-2.5 py-0.5 bg-indigo-600 text-white rounded-lg text-xs font-extrabold">Kelas 5</span>
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <input type="date" id="filterDateInput" onchange="onDateFilterChange(this.value)"
+                        class="text-xs sm:text-sm font-medium bg-slate-50 text-slate-700 px-3.5 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none w-full sm:w-auto cursor-pointer">
+                    <button onclick="clearDateFilter()" id="clearDateBtn" title="Reset Tanggal" class="hidden text-rose-500 hover:text-rose-600 p-1.5 transition text-sm font-bold">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <div id="jadwalContentList" class="space-y-3 overflow-y-auto max-h-[50vh] sm:max-h-[55vh] pr-1">
+                <div class="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <svg class="animate-spin h-7 w-7 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Memuat jadwal penilaian...</span>
+                </div>
+            </div>
+
+            <button onclick="backToDashboard()" class="w-full py-3.5 bg-indigo-600 text-white rounded-2xl text-xs sm:text-sm font-bold hover:bg-indigo-700 transition active:scale-95 shadow-md">
+                Kembali ke Beranda
+            </button>
+        </div>
+
+        <div id="soalPage" class="p-5 sm:p-8 md:p-10 hidden space-y-4 sm:space-y-5 animate-fade-in">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100">
+                <div class="space-y-0.5">
+                    <h2 class="font-extrabold text-slate-800 text-base sm:text-lg flex items-center gap-2">
+                        <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Lembar Soal Penilaian
+                    </h2>
+                    <p id="soalSubTitle" class="text-xs text-slate-500 font-medium">Daftar soal status aktif</p>
+                </div>
+                <button onclick="closeSoalPage()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1 border border-rose-100">
+                    <span>Selesai Penilaian</span>
+                </button>
+            </div>
+
+            <div id="soalContentList" class="space-y-3 overflow-y-auto max-h-[50vh] sm:max-h-[55vh] pr-1">
+                <div class="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <svg class="animate-spin h-7 w-7 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Memuat soal penilaian aktif...</span>
+                </div>
+            </div>
+
+            <button onclick="closeSoalPage()" class="w-full py-3.5 bg-rose-600 text-white rounded-2xl text-xs sm:text-sm font-bold hover:bg-rose-700 transition active:scale-95 shadow-md">
+                Selesai Penilaian & Kembali ke Beranda
+            </button>
+        </div>
+
+    </div>
+
+    <div id="iframeExamModal"
+         class="hidden fixed inset-0 z-50 bg-slate-900
+                flex flex-col overflow-hidden">
+
+        <div class="relative z-25 shrink-0 bg-slate-800
+                    px-3 sm:px-6 py-3 border-b border-slate-700
+                    flex items-center justify-between gap-2 shadow-md">
+
+            <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+                <div class="w-3 h-3 shrink-0 rounded-full
+                            bg-emerald-500 animate-pulse"></div>
+
+                <div class="min-w-0">
+                    <h3 id="modalExamTitle"
+                        class="text-xs sm:text-sm md:text-base font-extrabold
+                               text-white truncate">
+                        Mata Pelajaran
+                    </h3>
+
+                    <p id="modalExamStudent"
+                       class="text-[10px] sm:text-xs
+                              text-slate-400 truncate">
+                        Murid: -
+                    </p>
+                </div>
+            </div>
+
+            <div class="shrink-0 flex items-center gap-1.5
+                        bg-slate-900 border border-slate-700
+                        px-3 sm:px-4 py-1.5 rounded-xl
+                        text-emerald-400 font-mono font-extrabold
+                        text-xs sm:text-sm md:text-base">
+                <span id="examTimerDisplay">00:00:00</span>
+            </div>
+
+            <button type="button"
+                    onclick="confirmExitExam()"
+                    class="shrink-0 px-3 sm:px-4 py-2
+                           bg-rose-600 hover:bg-rose-700
+                           text-white rounded-xl text-xs sm:text-sm font-bold transition active:scale-95">
+                Keluar Ujian
+            </button>
+        </div>
+
+        <div class="relative flex-1 min-h-0 w-full bg-white">
+            <iframe id="examIframe"
+                    src=""
+                    title="Halaman Soal Ujian"
+                    class="absolute inset-0 w-full h-full border-0"
+                    allow="autoplay; fullscreen">
+            </iframe>
+        </div>
+
+        <!-- Floating Proctor Camera Widget (Optimized for all screens) -->
+        <div id="proctorWidget"
+             class="hidden fixed bottom-3 right-3 z-[60]
+                    w-20 h-28 sm:w-24 sm:h-36 md:w-28 md:h-40
+                    rounded-2xl overflow-hidden
+                    border-2 border-emerald-400/80
+                    bg-slate-900/85 shadow-2xl
+                    opacity-90 hover:opacity-100
+                    transition-opacity duration-300
+                    pointer-events-none">
+
+            <div class="relative w-full h-full bg-black/70">
+                <video id="proctorVideo"
+                       autoplay
+                       playsinline
+                       muted
+                       class="w-full h-full object-cover -scale-x-100">
+                </video>
+
+                <div class="absolute top-1.5 left-1.5
+                            flex items-center gap-1
+                            bg-red-600/95 px-1.5 py-0.5
+                            rounded-full text-[9px] sm:text-[10px]
+                            font-bold text-white shadow">
+                    <span class="w-1.5 h-1.5 rounded-full
+                                 bg-white animate-pulse"></span>
+                    REC
+                </div>
+
+                <div class="absolute bottom-0 inset-x-0
+                            bg-black/70 text-emerald-300
+                            text-[8px] sm:text-[9px] text-center py-1 font-semibold">
+                    Pengawasan Aktif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="violationOverlay" class="hidden fixed inset-0 z-[100] backdrop-blur-2xl animate-lockout flex flex-col items-center justify-center p-6 text-white text-center select-none">
+        <div class="w-20 h-20 sm:w-24 sm:h-24 bg-white/20 backdrop-blur-md border-2 border-white/40 rounded-3xl flex items-center justify-center mb-4 shadow-2xl animate-bounce">
+            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+        </div>
+
+        <h2 class="text-xl sm:text-3xl font-black uppercase tracking-wider text-white drop-shadow-md">PELANGGARAN TERDETEKSI!</h2>
+        <p class="text-xs sm:text-sm font-semibold mt-2 text-rose-100 max-w-md">Anda terdeteksi melakukan tindakan kecurangan (Pindah Tab / Screenshot / Menutup Layar Penilaian).</p>
+        
+        <div class="mt-6 bg-black/40 border border-white/20 p-5 rounded-2xl backdrop-blur-md max-w-xs w-full shadow-2xl space-y-1">
+            <p class="text-xs font-bold uppercase text-rose-200">Akses Soal Dikunci Selama:</p>
+            <div id="lockoutTimerDisplay" class="text-4xl font-black font-mono text-yellow-300 py-1">02:00</div>
+            <p class="text-[10px] text-slate-300">Harap tunggu hingga timer selesai untuk melanjutkan pengerjaan.</p>
         </div>
     </div>
 
     <script>
-        const subjects = [
-            { name: "Pendidikan Agama Katolik", task: "Mendoakan doa 'Aku Percaya'", link: "https://docs.google.com/spreadsheets/d/11sn1_fhlPbUwR1weAz7-_ZP7Wpaadyshb0p7QPimREo", icon: "fa-cross", color: "text-indigo-400" },
-            { name: "Pendidikan Pancasila", task: "Menggambar peta kota", link: "https://docs.google.com/spreadsheets/d/1K5jF2jiV9vBoar2UJlqCoMCCW6enCk5E6l4n-FLE_ME", icon: "fa-map-marked-alt", color: "text-red-400" },
-            { name: "Bahasa Indonesia", task: "Menulis teks dan berpidato (Kelestarian Alam)", link: "https://docs.google.com/spreadsheets/d/1CqGG_ScNIO7SsbSHN1K7HpR_z9QC9NeAgixfDID_RbM", icon: "fa-microphone-alt", color: "text-orange-400" },
-            { name: "Matematika", task: "Mengontruksi bangun ruang", link: "https://docs.google.com/spreadsheets/d/1DaltOdixaVWm_uPZ4b_mR537VyP5lU7DPmrolvOH_Gg", icon: "fa-shapes", color: "text-blue-400" },
-            { name: "IPAS", task: "Membuat model gerhana Matahari dan Bulan", link: "https://docs.google.com/spreadsheets/d/1EJZ7-8EEyv1p83Tu5Mx3Co3uYupzC0HtVKOk-VjzNTI", icon: "fa-globe-asia", color: "text-emerald-400" },
-            { name: "Seni Musik", task: "Menampilkan lagu dengan alat musik", link: "https://docs.google.com/spreadsheets/d/1NkEA3EaQPVcW4qByJ3VBk_5b3Ge3Es9baHjGnA5dRHM", icon: "fa-music", color: "text-purple-400" },
-            { name: "Seni Rupa", task: "Berkarya dengan barang bekas", link: "https://docs.google.com/spreadsheets/d/1AlVU5weLiBkkgYRZ9i3aU0RDYVtS7pDJTaa9JQ-maTM", icon: "fa-palette", color: "text-pink-400" },
-            { name: "Seni Tari", task: "Pagelaran Tari Rebana", link: "https://docs.google.com/spreadsheets/d/1TGiQ_6Vq19Bug0ZZxSygzYUOCmVDfbierPiuzfc8u4Y", icon: "fa-user-friends", color: "text-rose-400" },
-            { name: "PJOK", task: "Senam kreasi", link: "https://docs.google.com/spreadsheets/d/1Ree9MglUWAD5Li35t9-m1gntX6ghZTgsjCLsuGkD7sc", icon: "fa-running", color: "text-green-400" },
-            { name: "Bahasa Inggris", task: "Telling Future Dream", link: "https://docs.google.com/spreadsheets/d/1GfFEwyV2_T8gYbf9SzgmHSkNcR4EzWwKWPCWLD_4pdE", icon: "fa-language", color: "text-yellow-400" },
-            { name: "Bahasa Sunda", task: "Biantara", link: "https://docs.google.com/spreadsheets/d/1KJTGiyB3zkhcOchS3t7XGwonf8j7GxvuZIBHippwk2Y", icon: "fa-landmark", color: "text-teal-400" },
-            { name: "Informatika", task: "Membuat aplikasi menggunakan SCRATCH", link: "https://docs.google.com/spreadsheets/d/1SYhhOT9NpxwIJN0H6cmXdSDybERX55OKXHXT9pB2-Eo", icon: "fa-laptop-code", color: "text-slate-400" }
-        ];
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw2r5vrVYjaX7R59IWj3mmzGgNiVhjOB2oqPqOgM1h0WWT1Nnw-bqEjB-CoppfHRVrYhQ/exec";
+        const GAS_JADWAL_URL = "https://script.google.com/macros/s/AKfycbwuRSCSKpLS25W4zh8Xx4auny00Qu_DPZavhjOhJ3m1lwT-5pRHyuf6MDWjmQgqxlhkzg/exec";
+        const GAS_TOKEN_URL = "https://script.google.com/macros/s/AKfycbzE4KCPH6QZ_Fl6XLucxFpjMDA2ca1g83KieBLxd78h64Zo8RVj8iucXdq6SfVdntsP/exec";
+        const GAS_SOAL_URL = "https://script.google.com/macros/s/AKfycbzb4HsZUIYH7WOMdejFYkr_sqWM6I-DrP3a_NI1n3mdeGS6qXrRIYzY-fNklPW4drzcUA/exec";
 
-        function renderCards(filter = "") {
-            const grid = document.getElementById('subject-grid');
-            grid.innerHTML = "";
+        let currentStudent = null;
+        let fetchTimeout = null;
+        let cachedSchedules = [];
+        let selectedDateFilter = '';
+        let mediaStream = null;
+
+        let examTimerInterval = null;
+        let examTimeRemaining = 0;
+        let isExamActive = false;
+        let isLockedOut = false;
+        let lockoutTimerInterval = null;
+        let lockoutRemaining = 0;
+        let synthAlarm = null;
+
+        function sendStudentStatus(statusString) {
+            if (!currentStudent) return;
+            const noUjian = encodeURIComponent(currentStudent.no_ujian || '');
+            const namaMurid = encodeURIComponent(currentStudent.nama_murid || '');
+            const kelas = encodeURIComponent(currentStudent.kelas || 'Umum');
+            const status = encodeURIComponent(statusString);
+
+            const url = `${GAS_WEB_APP_URL}?action=log_status&no_ujian=${noUjian}&nama_murid=${namaMurid}&kelas=${kelas}&status=${status}`;
             
-            const filtered = subjects.filter(s => 
-                s.name.toLowerCase().includes(filter.toLowerCase()) || 
-                s.task.toLowerCase().includes(filter.toLowerCase())
-            );
+            fetch(url, { method: 'GET', mode: 'no-cors' })
+                .then(() => console.log("Status berhasil dikirim ke Google Sheet:", statusString))
+                .catch(err => console.log("Gagal mengirim status siswa:", err));
+        }
 
-            filtered.forEach(sub => {
-                const card = document.createElement('div');
-                card.className = `neon-card p-6 rounded-[2rem] flex flex-col justify-between cursor-pointer group`;
-                card.onclick = () => openModal(sub);
+        function playEmergencyAlarm() {
+            try {
+                if (window.Tone && Tone.context.state !== 'running') {
+                    Tone.start();
+                }
+                if (!synthAlarm && window.Tone) {
+                    synthAlarm = new Tone.Synth({
+                        oscillator: { type: 'sawtooth' },
+                        envelope: { attack: 0.05, decay: 0.2, sustain: 0.5, release: 0.5 }
+                    }).toDestination();
+                }
                 
-                card.innerHTML = `
-                    <div>
-                        <div class="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-6 border border-white/10 group-hover:border-cyan-500/50 transition">
-                            <i class="fas ${sub.icon} ${sub.color} text-2xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-3 leading-tight group-hover:text-cyan-400 transition">${sub.name}</h3>
-                        <p class="text-sm text-slate-400 leading-relaxed mb-4">
-                            <span class="font-bold block text-slate-500 uppercase text-[10px] tracking-wider mb-1">Materi Uji:</span>
-                            ${sub.task}
-                        </p>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
-                        <span class="text-[10px] font-bold text-cyan-500 uppercase tracking-[0.2em]">Buka Form</span>
-                        <i class="fas fa-external-link-alt text-xs text-slate-500 group-hover:text-cyan-400 transition"></i>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
+                if (synthAlarm) {
+                    const now = Tone.now();
+                    synthAlarm.triggerAttackRelease("A5", "0.2", now);
+                    synthAlarm.triggerAttackRelease("E5", "0.2", now + 0.25);
+                    synthAlarm.triggerAttackRelease("A5", "0.2", now + 0.5);
+                    synthAlarm.triggerAttackRelease("E5", "0.2", now + 0.75);
+                }
+            } catch (e) {
+                console.log("Audio alarm tidak diizinkan browser:", e);
+            }
         }
 
-        function filterSubjects() {
-            const query = document.getElementById('search-bar').value;
-            renderCards(query);
-        }
+        function checkStudentData() {
+            const inputNo = document.getElementById('noUjian').value.trim();
+            const namaInput = document.getElementById('namaMurid');
+            const kelasInput = document.getElementById('kelasMurid');
+            const btnSubmit = document.getElementById('btnSubmit');
+            const errorMsg = document.getElementById('errorMsg');
+            const loadingIcon = document.getElementById('loadingIcon');
 
-        function openModal(sub) {
-            const modal = document.getElementById('modal');
-            const iframe = document.getElementById('sheet-iframe');
-            const title = document.getElementById('modal-title');
-            const iconBox = document.getElementById('modal-icon');
-            const spinner = document.getElementById('loading-spinner');
+            clearTimeout(fetchTimeout);
 
-            title.innerText = sub.name;
-            iconBox.innerHTML = `<i class="fas ${sub.icon}"></i>`;
-            
-            const sheetIdMatch = sub.link.match(/\/d\/(.*?)(\/|$)/);
-            const sheetId = sheetIdMatch ? sheetIdMatch[1] : "";
-            const optimizedLink = `https://docs.google.com/spreadsheets/d/${sheetId}/edit?rm=minimal&ui=2&chrome=false&widget=true`;
-            
-            spinner.style.display = 'flex';
-            iframe.src = "about:blank";
-            
-            setTimeout(() => {
-                iframe.src = optimizedLink;
-            }, 50);
+            if (inputNo === "") {
+                namaInput.value = "";
+                kelasInput.value = "";
+                btnSubmit.disabled = true;
+                errorMsg.classList.add('hidden');
+                loadingIcon.classList.add('hidden');
+                currentStudent = null;
+                return;
+            }
 
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+            loadingIcon.classList.remove('hidden');
+            btnSubmit.disabled = true;
 
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            const iframe = document.getElementById('sheet-iframe');
-            modal.classList.remove('active');
-            iframe.src = ''; 
-            document.body.style.overflow = 'auto';
-        }
-
-        function hideLoading() {
-            setTimeout(() => {
-                document.getElementById('loading-spinner').style.display = 'none';
+            fetchTimeout = setTimeout(() => {
+                fetch(`${GAS_WEB_APP_URL}?no_ujian=${encodeURIComponent(inputNo)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        loadingIcon.classList.add('hidden');
+                        if (data.status === "success") {
+                            namaInput.value = data.nama_murid;
+                            kelasInput.value = data.kelas;
+                            btnSubmit.disabled = false;
+                            errorMsg.classList.add('hidden');
+                            currentStudent = data;
+                        } else {
+                            namaInput.value = "";
+                            kelasInput.value = "";
+                            btnSubmit.disabled = true;
+                            errorMsg.innerText = "Nomor Ujian tidak ditemukan di Google Sheet.";
+                            errorMsg.classList.remove('hidden');
+                            currentStudent = null;
+                        }
+                    })
+                    .catch(err => {
+                        loadingIcon.classList.add('hidden');
+                        errorMsg.innerText = "Gagal terhubung ke Google Sheet. Periksa koneksi internet Anda.";
+                        errorMsg.classList.remove('hidden');
+                        currentStudent = null;
+                    });
             }, 300);
         }
 
-        renderCards();
+        function handleLogin(e) {
+            e.preventDefault();
+            if (!currentStudent) return;
 
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
+            const btnSubmit = document.getElementById('btnSubmit');
+            const btnLoginText = document.getElementById('btnLoginText');
+            const loginSpinner = document.getElementById('loginSpinner');
+
+            btnSubmit.disabled = true;
+            btnLoginText.innerText = "Mencatat Login...";
+            loginSpinner.classList.remove('hidden');
+
+            requestFullScreen();
+            sendStudentStatus("berhasil login");
+
+            setTimeout(() => {
+                proceedToDashboard();
+            }, 500);
+        }
+
+        function requestFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(() => {});
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        function proceedToDashboard() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.remove('hidden');
+
+            document.getElementById('dispNo').innerText = currentStudent.no_ujian;
+            document.getElementById('dispNama').innerText = currentStudent.nama_murid;
+            document.getElementById('dispKelas').innerText = currentStudent.kelas;
+
+            document.getElementById('btnSubmit').disabled = false;
+            document.getElementById('btnLoginText').innerText = "Masuk ke Ujian";
+            document.getElementById('loginSpinner').classList.add('hidden');
+        }
+
+        function handleLogout() {
+            currentStudent = null;
+            document.getElementById('noUjian').value = '';
+            document.getElementById('namaMurid').value = '';
+            document.getElementById('kelasMurid').value = '';
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+        }
+
+        function getGradeGroup(kelasStr) {
+            if (!kelasStr) return "Kelas 5";
+            const cleanStr = String(kelasStr).trim().toUpperCase();
+            if (cleanStr.includes("6")) return "Kelas 6";
+            return "Kelas 5";
+        }
+
+        function openJadwalPage() {
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('jadwalPage').classList.remove('hidden');
+
+            const gradeGroup = getGradeGroup(currentStudent ? currentStudent.kelas : "5");
+            document.getElementById('jadwalSubTitle').innerText = `Siswa: ${currentStudent ? currentStudent.nama_murid : ''} (${currentStudent ? currentStudent.kelas : ''})`;
+            document.getElementById('activeGradeBadge').innerText = gradeGroup;
+
+            const contentContainer = document.getElementById('jadwalContentList');
+            contentContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <svg class="animate-spin h-7 w-7 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Memuat jadwal ${gradeGroup}...</span>
+                </div>
+            `;
+
+            fetch(GAS_JADWAL_URL)
+                .then(res => res.json())
+                .then(data => {
+                    let listJadwal = [];
+                    if (Array.isArray(data)) {
+                        listJadwal = data;
+                    } else if (data.status === "success" && Array.isArray(data.jadwal)) {
+                        listJadwal = data.jadwal;
+                    } else if (data.data && Array.isArray(data.data)) {
+                        listJadwal = data.data;
+                    }
+
+                    cachedSchedules = listJadwal;
+                    renderFilteredJadwal();
+                })
+                .catch(() => {
+                    contentContainer.innerHTML = `
+                        <div class="p-4 bg-rose-50 text-rose-600 text-center rounded-2xl border border-rose-100 text-xs font-semibold">
+                            Gagal memuat jadwal. Periksa koneksi internet Anda.
+                        </div>
+                    `;
+                });
+        }
+
+        function onDateFilterChange(val) {
+            selectedDateFilter = val;
+            const clearBtn = document.getElementById('clearDateBtn');
+            if (val) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            renderFilteredJadwal();
+        }
+
+        function clearDateFilter() {
+            selectedDateFilter = '';
+            document.getElementById('filterDateInput').value = '';
+            document.getElementById('clearDateBtn').classList.add('hidden');
+            renderFilteredJadwal();
+        }
+
+        function renderFilteredJadwal() {
+            const contentContainer = document.getElementById('jadwalContentList');
+            const gradeGroup = getGradeGroup(currentStudent ? currentStudent.kelas : "5");
+
+            let filtered = cachedSchedules.filter(item => {
+                const itemClass = (item.class || item.kelas || "").trim();
+                return itemClass.toLowerCase() === gradeGroup.toLowerCase();
+            });
+
+            if (selectedDateFilter) {
+                filtered = filtered.filter(item => {
+                    const dateStr = item.date || item.tanggal || item.hari || '';
+                    return dateStr.startsWith(selectedDateFilter);
+                });
+            }
+
+            if (filtered.length === 0) {
+                contentContainer.innerHTML = `
+                    <div class="p-6 bg-slate-50 text-slate-500 text-center rounded-2xl border border-slate-100 text-xs space-y-1">
+                        <p class="font-bold text-slate-700">Tidak ada jadwal ujian</p>
+                        <p>Belum ada jadwal yang cocok untuk ${gradeGroup}.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const groupedByDate = {};
+            filtered.forEach(item => {
+                const dateKey = item.date || item.tanggal || item.hari || 'Tanpa Tanggal';
+                if (!groupedByDate[dateKey]) groupedByDate[dateKey] = [];
+                groupedByDate[dateKey].push(item);
+            });
+
+            let sortedDates = Object.keys(groupedByDate);
+            if (!selectedDateFilter) {
+                sortedDates = sortedDates.slice(0, 3);
+            }
+
+            let htmlBuilder = '';
+            sortedDates.forEach(dateStr => {
+                const items = groupedByDate[dateStr];
+                const formattedDate = formatDateHeader(dateStr);
+
+                htmlBuilder += `
+                    <div class="space-y-2 pt-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-xl text-[11px] font-extrabold flex items-center gap-1.5 border border-indigo-200">
+                                📅 ${formattedDate}
+                            </span>
+                            <div class="h-px bg-slate-200 flex-grow"></div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                `;
+
+                items.forEach(item => {
+                    const subject = item.subject || item.mapel || item.mata_pelajaran || "Mata Pelajaran";
+                    const time = formatTimeDisplay(item.time || item.waktu || item.jam || "-");
+                    const duration = item.duration || item.durasi || "-";
+                    const clsName = item.class || item.kelas || gradeGroup;
+
+                    htmlBuilder += `
+                        <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition space-y-2.5 relative overflow-hidden group">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-indigo-600"></div>
+                            <div class="flex justify-between items-center">
+                                <span class="px-2.5 py-1 bg-indigo-50 text-indigo-700 font-bold rounded-lg text-xs border border-indigo-100">${clsName}</span>
+                                <span class="text-xs font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg flex items-center gap-1">⏰ ${time}</span>
+                            </div>
+                            <h4 class="font-extrabold text-slate-900 text-sm sm:text-base group-hover:text-indigo-600 transition-colors">${subject}</h4>
+                            <div class="flex justify-between items-center text-xs text-slate-500 pt-1.5 border-t border-slate-100">
+                                <span>Durasi Pengerjaan:</span>
+                                <span class="font-semibold text-slate-700">${duration}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                htmlBuilder += `</div></div>`;
+            });
+
+            contentContainer.innerHTML = htmlBuilder;
+        }
+
+        function formatDateHeader(dateString) {
+            if (!dateString || dateString === 'Tanpa Tanggal') return 'Tanpa Tanggal';
+            try {
+                const dateObj = new Date(dateString);
+                if (isNaN(dateObj.getTime())) return dateString;
+                return dateObj.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        function formatTimeDisplay(timeStr) {
+            if (!timeStr) return '-';
+            let formatted = timeStr;
+            if (timeStr.includes('T')) {
+                const parts = timeStr.split('T');
+                if (parts[1]) formatted = parts[1].substring(0, 5);
+            } else if (timeStr.split(':').length >= 2) {
+                const parts = timeStr.split(':');
+                formatted = parts[0] + '.' + parts[1];
+            }
+            if (!formatted.includes('WIB')) formatted += ' WIB';
+            return formatted;
+        }
+
+        function backToDashboard() {
+            document.getElementById('jadwalPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.remove('hidden');
+        }
+
+        function openTokenModal() {
+            const modal = document.createElement('div');
+            modal.id = "tokenModal";
+            modal.className = "fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in";
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full space-y-4 shadow-2xl text-center border border-slate-100">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base sm:text-lg">Masukkan Token Ujian</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">Minta token ujian yang berlaku kepada pengawas atau guru.</p>
+                    </div>
+                    
+                    <form onsubmit="verifyToken(event)" class="space-y-3 text-left">
+                        <div>
+                            <input type="text" id="inputToken" required placeholder="Ketik token ujian..." 
+                                class="w-full px-4 py-3 sm:py-3.5 text-sm sm:text-base font-bold text-center tracking-wider uppercase border border-slate-200 rounded-2xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition bg-slate-50">
+                        </div>
+                        <div id="tokenError" class="text-xs text-rose-600 font-semibold text-center hidden p-2.5 bg-rose-50 rounded-xl border border-rose-100"></div>
+                        
+                        <button type="submit" id="btnVerify"
+                            class="w-full py-3.5 bg-emerald-600 text-white rounded-2xl text-xs sm:text-sm font-bold hover:bg-emerald-700 transition active:scale-95 shadow-md flex items-center justify-center gap-2">
+                            <span id="btnVerifyText">Konfirmasi Token</span>
+                            <div id="verifySpinner" class="hidden animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
+                        </button>
+                    </form>
+
+                    <button onclick="document.getElementById('tokenModal').remove()" class="w-full py-2.5 bg-slate-100 text-slate-600 rounded-xl text-xs sm:text-sm font-bold hover:bg-slate-200 transition">Batal</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            document.getElementById('inputToken').focus();
+        }
+
+        function verifyToken(e) {
+            e.preventDefault();
+            const enteredToken = document.getElementById('inputToken').value.trim().toUpperCase();
+            const btnVerify = document.getElementById('btnVerify');
+            const btnVerifyText = document.getElementById('btnVerifyText');
+            const verifySpinner = document.getElementById('verifySpinner');
+            const tokenError = document.getElementById('tokenError');
+
+            btnVerify.disabled = true;
+            btnVerifyText.innerText = "Memeriksa Token...";
+            verifySpinner.classList.remove('hidden');
+            tokenError.classList.add('hidden');
+
+            fetch(GAS_TOKEN_URL)
+                .then(res => res.json())
+                .then(data => {
+                    btnVerify.disabled = false;
+                    btnVerifyText.innerText = "Konfirmasi Token";
+                    verifySpinner.classList.add('hidden');
+
+                    let activeToken = "";
+                    if (data && data.token) {
+                        activeToken = String(data.token).trim().toUpperCase();
+                    } else if (typeof data === "string") {
+                        activeToken = data.trim().toUpperCase();
+                    } else if (data && data.status === "success" && data.data) {
+                        activeToken = String(data.data).trim().toUpperCase();
+                    }
+
+                    if (enteredToken === activeToken && activeToken !== "") {
+                        document.getElementById('tokenModal').remove();
+                        sendStudentStatus("berhasil mengambil soal");
+                        openCameraPermissionModal();
+                    } else {
+                        tokenError.innerText = "Token ujian salah atau tidak valid!";
+                        tokenError.classList.remove('hidden');
+                    }
+                })
+                .catch(() => {
+                    btnVerify.disabled = false;
+                    btnVerifyText.innerText = "Konfirmasi Token";
+                    verifySpinner.classList.add('hidden');
+                    tokenError.innerText = "Gagal memverifikasi token. Periksa koneksi internet.";
+                    tokenError.classList.remove('hidden');
+                });
+        }
+
+        function openCameraPermissionModal() {
+            const modal = document.createElement('div');
+            modal.id = "camModal";
+            modal.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in";
+            modal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full space-y-4 shadow-2xl text-center border border-slate-100">
+                    <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-base sm:text-lg">Aktivasi Kamera Pengawas</h3>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">Ujian ini mewajibkan aktivasi kamera perangkat untuk pengawasan integritas ujian.</p>
+                    </div>
+                    
+                    <button onclick="requestCameraAccess()" 
+                        class="w-full py-3.5 bg-indigo-600 text-white rounded-2xl text-xs sm:text-sm font-bold hover:bg-indigo-700 transition active:scale-95 shadow-lg shadow-indigo-200">
+                        Aktifkan Kamera & Mulai
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function requestCameraAccess() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
+                .then(stream => {
+                    mediaStream = stream;
+                    const camModal = document.getElementById('camModal');
+                    if (camModal) camModal.remove();
+
+                    requestFullScreen();
+
+                    const widget = document.getElementById('proctorWidget');
+                    const videoElem = document.getElementById('proctorVideo');
+                    videoElem.srcObject = stream;
+                    widget.classList.remove('hidden');
+
+                    openSoalLembarPage();
+                })
+                .catch(() => {
+                    // Fallback if camera is denied, allow student to proceed with warning or alert modal
+                    const camModal = document.getElementById('camModal');
+                    if (camModal) camModal.remove();
+                    
+                    const fallbackModal = document.createElement('div');
+                    fallbackModal.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in";
+                    fallbackModal.innerHTML = `
+                        <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center">
+                            <h3 class="font-bold text-slate-800 text-base">Kamera Tidak Aktif</h3>
+                            <p class="text-xs text-slate-500">Akses kamera tidak diizinkan. Anda tetap dapat melanjutkan ujian, namun aktivitas ujian akan dicatat.</p>
+                            <button onclick="this.parentElement.parentElement.remove(); requestFullScreen(); openSoalLembarPage();" 
+                                class="w-full py-3 bg-indigo-600 text-white rounded-2xl text-xs font-bold">Lanjutkan Ujian</button>
+                        </div>
+                    `;
+                    document.body.appendChild(fallbackModal);
+                });
+        }
+
+        function openSoalLembarPage() {
+            document.getElementById('dashboardPage').classList.add('hidden');
+            document.getElementById('soalPage').classList.remove('hidden');
+
+            const gradeGroup = getGradeGroup(currentStudent ? currentStudent.kelas : "5");
+            document.getElementById('soalSubTitle').innerText = `Siswa: ${currentStudent ? currentStudent.nama_murid : ''} (${gradeGroup})`;
+
+            const contentContainer = document.getElementById('soalContentList');
+            contentContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-12 text-slate-400 space-y-2">
+                    <svg class="animate-spin h-7 w-7 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-xs font-medium">Memuat soal aktif dari Google Sheet...</span>
+                </div>
+            `;
+
+            fetch(GAS_SOAL_URL)
+                .then(res => res.json())
+                .then(data => {
+                    let listSoal = [];
+                    if (Array.isArray(data)) {
+                        listSoal = data;
+                    } else if (data.status === "success" && Array.isArray(data.soal)) {
+                        listSoal = data.soal;
+                    } else if (data.data && Array.isArray(data.data)) {
+                        listSoal = data.data;
+                    }
+
+                    renderActiveSoal(listSoal, gradeGroup);
+                })
+                .catch(() => {
+                    contentContainer.innerHTML = `
+                        <div class="p-4 bg-rose-50 text-rose-600 text-center rounded-2xl border border-rose-100 text-xs font-semibold">
+                            Gagal memuat soal ujian. Periksa koneksi internet Anda.
+                        </div>
+                    `;
+                });
+        }
+
+        function renderActiveSoal(listSoal, gradeGroup) {
+            const contentContainer = document.getElementById('soalContentList');
+            const studentGradeNum = gradeGroup.replace(/[^0-9]/g, '');
+
+            let filtered = listSoal.filter(item => {
+                const subject = item["Mata Pelajaran"] || item.mapel || item.subject || "";
+                const link = item["Link Soal"] || item.link || item.url || "";
+                const rawClass = item["Kelas"] || item.kelas || item.class || "";
+                const status = String(item["Status"] || item.status || "").trim().toLowerCase();
+
+                if (!subject || !link) return false;
+                if (status !== "aktif") return false;
+
+                const cleanItemClass = String(rawClass).trim().toUpperCase();
+                let matchClass = false;
+
+                if (cleanItemClass === "" || cleanItemClass === "UMUM" || cleanItemClass === "SEMUA KELAS") {
+                    matchClass = true;
+                } else if (cleanItemClass === studentGradeNum || cleanItemClass === "KELAS " + studentGradeNum) {
+                    matchClass = true;
+                } else if (cleanItemClass.includes(studentGradeNum)) {
+                    matchClass = true;
+                }
+
+                return matchClass;
+            });
+
+            if (filtered.length === 0) {
+                contentContainer.innerHTML = `
+                    <div class="p-6 bg-slate-50 text-slate-500 text-center rounded-2xl border border-slate-100 text-xs space-y-1">
+                        <p class="font-bold text-slate-700">Belum Ada Soal Ujian Aktif</p>
+                        <p>Tidak ditemukan soal dengan status <b>Aktif</b> untuk ${gradeGroup}.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let htmlBuilder = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">`;
+
+            filtered.forEach((item) => {
+                const subject = item["Mata Pelajaran"] || item.mapel || "Mata Pelajaran";
+                const linkSoal = item["Link Soal"] || item.link || "#";
+                const rawClass = item["Kelas"] || item.kelas || gradeGroup;
+                const duration = item["Durasi"] || item.durasi || "50";
+
+                const displayClass = isNaN(rawClass) ? rawClass : `Kelas ${rawClass}`;
+                
+                const safeSubject = subject.replace(/'/g, "\\'");
+                const safeLink = linkSoal.replace(/'/g, "\\'");
+
+                htmlBuilder += `
+                    <div class="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition space-y-3 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1.5 h-full bg-emerald-500"></div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 font-extrabold rounded-lg text-xs border border-emerald-100 flex items-center gap-1.5">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> ${displayClass}
+                            </span>
+                            <span class="px-2.5 py-1 bg-slate-100 text-slate-600 font-semibold rounded-lg text-xs">
+                                ⏱️ ${duration} Menit
+                            </span>
+                        </div>
+
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 text-base group-hover:text-emerald-600 transition-colors">${subject}</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Status: <span class="text-emerald-600 font-bold">Aktif</span></p>
+                        </div>
+
+                        <button onclick="startExamInIframe('${safeLink}', '${safeSubject}', ${duration})"
+                            class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold transition active:scale-95 shadow-md flex items-center justify-center gap-1.5">
+                            <span>Mulai Mengerjakan Soal</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                `;
+            });
+
+            htmlBuilder += `</div>`;
+            contentContainer.innerHTML = htmlBuilder;
+        }
+
+        function startExamInIframe(link, subject, durationMinutes) {
+            document.getElementById('soalPage').classList.add('hidden');
+            document.getElementById('iframeExamModal').classList.remove('hidden');
+
+            document.getElementById('modalExamTitle').innerText = subject;
+            document.getElementById('modalExamStudent').innerText = `Murid: ${currentStudent ? currentStudent.nama_murid : '-'} (${currentStudent ? currentStudent.no_ujian : '-'})`;
+
+            const iframe = document.getElementById('examIframe');
+            iframe.src = link;
+
+            sendStudentStatus(`mulai ujian: ${subject}`);
+            isExamActive = true;
+
+            const totalSeconds = (parseInt(durationMinutes) || 50) * 60;
+            examTimeRemaining = totalSeconds;
+            startExamTimer();
+            initExamSecurityListeners();
+        }
+
+        function startExamTimer() {
+            clearInterval(examTimerInterval);
+            updateTimerDisplay();
+
+            examTimerInterval = setInterval(() => {
+                examTimeRemaining--;
+                updateTimerDisplay();
+
+                if (examTimeRemaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    alertCustomModal("Waktu Ujian Telah Habis!", "Waktu pengerjaan penilaian Anda telah selesai. Sistem akan menutup lembar soal.");
+                    setTimeout(() => {
+                        exitExamToDashboard();
+                    }, 3000);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const hours = Math.floor(examTimeRemaining / 3600);
+            const minutes = Math.floor((examTimeRemaining % 3600) / 60);
+            const seconds = examTimeRemaining % 60;
+
+            const formatted = 
+                String(hours).padStart(2, '0') + ':' +
+                String(minutes).padStart(2, '0') + ':' +
+                String(seconds).padStart(2, '0');
+
+            document.getElementById('examTimerDisplay').innerText = formatted;
+        }
+
+        function initExamSecurityListeners() {
+            document.addEventListener('visibilitychange', handleVisibilityViolation);
+            window.addEventListener('blur', handleBlurViolation);
+        }
+
+        function removeExamSecurityListeners() {
+            document.removeEventListener('visibilitychange', handleVisibilityViolation);
+            window.removeEventListener('blur', handleBlurViolation);
+        }
+
+        function handleVisibilityViolation() {
+            if (!isExamActive || isLockedOut) return;
+            if (document.hidden) {
+                triggerLockoutPenalty("Keluar dari tab / minimize browser");
+            }
+        }
+
+        function handleBlurViolation() {
+            if (!isExamActive || isLockedOut) return;
+            // Delay slightly to avoid false positives on iframe focus switch
+            setTimeout(() => {
+                if (document.hasFocus() === false && isExamActive && !isLockedOut) {
+                    triggerLockoutPenalty("Pindah jendela / aplikasi lain");
+                }
+            }, 300);
+        }
+
+        function triggerLockoutPenalty(reason) {
+            isLockedOut = true;
+            sendStudentStatus(`PELANGGARAN: ${reason}`);
+            playEmergencyAlarm();
+
+            document.getElementById('violationOverlay').classList.remove('hidden');
+            lockoutRemaining = 120; // 2 minutes lockout
+            updateLockoutDisplay();
+
+            lockoutTimerInterval = setInterval(() => {
+                lockoutRemaining--;
+                updateLockoutDisplay();
+
+                if (lockoutRemaining <= 0) {
+                    clearInterval(lockoutTimerInterval);
+                    isLockedOut = false;
+                    document.getElementById('violationOverlay').classList.add('hidden');
+                }
+            }, 1000);
+        }
+
+        function updateLockoutDisplay() {
+            const mins = Math.floor(lockoutRemaining / 60);
+            const secs = lockoutRemaining % 60;
+            const formatted = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+            document.getElementById('lockoutTimerDisplay').innerText = formatted;
+        }
+
+        function confirmExitExam() {
+            const confirmBox = document.createElement('div');
+            confirmBox.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 z-[110] animate-fade-in";
+            confirmBox.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center border border-slate-100">
+                    <h3 class="font-bold text-slate-800 text-base">Akhiri Ujian Sekarang?</h3>
+                    <p class="text-xs text-slate-500">Pastikan Anda sudah menyelesaikan dan mengirimkan jawaban Anda pada lembar soal.</p>
+                    <div class="flex gap-2 pt-2">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" class="w-1/2 py-2.5 bg-slate-100 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-200 transition">Batal</button>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove(); exitExamToDashboard();" class="w-1/2 py-2.5 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition">Ya, Keluar</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmBox);
+        }
+
+        function exitExamToDashboard() {
+            isExamActive = false;
+            clearInterval(examTimerInterval);
+            clearInterval(lockoutTimerInterval);
+            removeExamSecurityListeners();
+
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+
+            document.getElementById('proctorWidget').classList.add('hidden');
+            document.getElementById('iframeExamModal').classList.add('hidden');
+            document.getElementById('violationOverlay').classList.add('hidden');
+            document.getElementById('examIframe').src = "";
+
+            sendStudentStatus("selesai ujian");
+            openSoalLembarPage();
+        }
+
+        function closeSoalPage() {
+            document.getElementById('soalPage').classList.add('hidden');
+            document.getElementById('dashboardPage').classList.remove('hidden');
+        }
+
+        function alertCustomModal(title, message) {
+            const alertModal = document.createElement('div');
+            alertModal.className = "fixed inset-0 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 z-[120] animate-fade-in";
+            alertModal.innerHTML = `
+                <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-2xl text-center border border-slate-100">
+                    <h3 class="font-bold text-slate-800 text-base">${title}</h3>
+                    <p class="text-xs text-slate-500">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="w-full py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition">Mengerti</button>
+                </div>
+            `;
+            document.body.appendChild(alertModal);
+        }
     </script>
 </body>
 </html>
