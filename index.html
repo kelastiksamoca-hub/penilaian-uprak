@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penilaian Online - SD SANTA MARIA MONICA 2026-2027</title>
+    <title>Ujian Online - SD SANTA MARIA MONICA</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
@@ -40,17 +40,17 @@
             
             <div class="relative z-10">
                 <span class="inline-block px-3 py-1 bg-white/15 backdrop-blur-md rounded-full text-[10px] font-bold uppercase tracking-wider text-indigo-100 mb-2 border border-white/10">
-                    Sistem Penilaian Online
+                    Sistem CBT Online
                 </span>
                 <h1 class="text-xl font-extrabold tracking-tight leading-snug">SD SANTA MARIA MONICA</h1>
-                <p class="text-xs text-indigo-100/80 mt-1 font-medium">Tahun Ajaran 2026-2027</p>
+                <p class="text-xs text-indigo-100/80 mt-1 font-medium">Ujian Penilaian Digital Siswa</p>
             </div>
         </div>
 
         <div id="loginPage" class="p-6 sm:p-8 animate-fade-in">
             <div class="text-center mb-6">
-                <h2 class="text-lg font-bold text-slate-800">Login Peserta Penilaian</h2>
-                <p class="text-xs text-slate-500 mt-1">Masukkan Nomor Ujian Contoh: 049-1A-10</p>
+                <h2 class="text-lg font-bold text-slate-800">Login Peserta Ujian</h2>
+                <p class="text-xs text-slate-500 mt-1">Masukkan Nomor Ujian untuk memuat data peserta</p>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
@@ -99,7 +99,7 @@
                     </svg>
                 </div>
                 
-                <h2 class="text-lg font-extrabold text-slate-800 leading-snug">Selamat Datang di Penilaian Online<br><span class="text-indigo-600">SD SANTA MARIA MONICA</span></h2>
+                <h2 class="text-lg font-extrabold text-slate-800 leading-snug">Selamat Datang di Ujian Online<br><span class="text-indigo-600">SD SANTA MARIA MONICA</span></h2>
                 
                 <div class="bg-indigo-50/70 p-4 rounded-2xl text-left border border-indigo-100/80 space-y-2 text-xs shadow-sm">
                     <div class="flex justify-between items-center border-b border-indigo-100 pb-1.5">
@@ -118,7 +118,7 @@
             </div>
 
             <div class="space-y-3">
-                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center">Menu Utama Penilaian</p>
+                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider text-center">Menu Utama Ujian</p>
                 
                 <div class="grid grid-cols-2 gap-3">
                     <div onclick="openJadwalPage()" class="group bg-gradient-to-br from-indigo-500 to-blue-600 p-4 rounded-2xl text-white cursor-pointer shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 flex flex-col justify-between active:scale-95">
@@ -128,7 +128,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm">Jadwal Penilaian</h3>
+                            <h3 class="font-bold text-sm">Jadwal Ujian</h3>
                             <p class="text-[10px] text-indigo-100 mt-0.5">Lihat mata pelajaran</p>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                             </svg>
                         </div>
                         <div>
-                            <h3 class="font-bold text-sm">Soal Penilaian</h3>
+                            <h3 class="font-bold text-sm">Soal Ujian</h3>
                             <p class="text-[10px] text-emerald-100 mt-0.5">Mulai kerjakan soal</p>
                         </div>
                     </div>
@@ -159,9 +159,9 @@
                 <div class="space-y-0.5">
                     <h2 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
                         <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        Jadwal Penilaian
+                        Jadwal Ujian
                     </h2>
-                    <p id="jadwalSubTitle" class="text-[11px] text-slate-500 font-medium">Daftar mata pelajaran penilaian</p>
+                    <p id="jadwalSubTitle" class="text-[11px] text-slate-500 font-medium">Daftar mata pelajaran ujian</p>
                 </div>
                 <button onclick="backToDashboard()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-bold transition flex items-center gap-1">
                     <span>← Kembali</span>
@@ -188,7 +188,7 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span class="text-xs font-medium">Memuat jadwal penilaian...</span>
+                    <span class="text-xs font-medium">Memuat jadwal ujian...</span>
                 </div>
             </div>
 
@@ -202,12 +202,12 @@
                 <div class="space-y-0.5">
                     <h2 class="font-extrabold text-slate-800 text-base flex items-center gap-2">
                         <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        Lembar Soal Penilaian
+                        Lembar Soal Ujian
                     </h2>
                     <p id="soalSubTitle" class="text-[11px] text-slate-500 font-medium">Daftar soal status aktif</p>
                 </div>
                 <button onclick="closeSoalPage()" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-bold transition flex items-center gap-1 border border-rose-100">
-                    <span>Selesai Penilaian</span>
+                    <span>Selesai Ujian</span>
                 </button>
             </div>
 
@@ -217,12 +217,12 @@
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span class="text-xs font-medium">Memuat soal penilaian aktif...</span>
+                    <span class="text-xs font-medium">Memuat soal ujian aktif...</span>
                 </div>
             </div>
 
             <button onclick="closeSoalPage()" class="w-full py-3 bg-rose-600 text-white rounded-2xl text-xs font-bold hover:bg-rose-700 transition active:scale-95 shadow-md">
-                Selesai Penilaian & Kembali ke Beranda
+                Selesai Ujian & Kembali ke Beranda
             </button>
         </div>
 
@@ -327,7 +327,7 @@
         </div>
 
         <h2 class="text-2xl sm:text-3xl font-black uppercase tracking-wider text-white drop-shadow-md">PELANGGARAN TERDETEKSI!</h2>
-        <p class="text-sm font-semibold mt-2 text-rose-100 max-w-md">Anda terdeteksi melakukan tindakan kecurangan (Pindah Tab / Screenshot / Menutup Layar Penilaian).</p>
+        <p class="text-sm font-semibold mt-2 text-rose-100 max-w-md">Anda terdeteksi melakukan tindakan kecurangan (Pindah Tab / Screenshot / Menutup Layar Ujian).</p>
         
         <div class="mt-6 bg-black/40 border border-white/20 p-5 rounded-2xl backdrop-blur-md max-w-xs w-full shadow-2xl space-y-1">
             <p class="text-xs font-bold uppercase text-rose-200">Akses Soal Dikunci Selama:</p>
@@ -337,7 +337,7 @@
     </div>
 
     <script>
-        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw2r5vrVYjaX7R59IWj3mmzGgNiVhjOB2oqPqOgM1h0WWT1Nnw-bqEjB-CoppfHRVrYhQ/exec";
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzwLr7zoDkLi89NdAiVRJ0epW6eXmyzRxNposh3NfOUfwZFkAFVAw8nhyGb_9Xd8w7TSg/exec";
         const GAS_JADWAL_URL = "https://script.google.com/macros/s/AKfycbwuRSCSKpLS25W4zh8Xx4auny00Qu_DPZavhjOhJ3m1lwT-5pRHyuf6MDWjmQgqxlhkzg/exec";
         const GAS_TOKEN_URL = "https://script.google.com/macros/s/AKfycbzE4KCPH6QZ_Fl6XLucxFpjMDA2ca1g83KieBLxd78h64Zo8RVj8iucXdq6SfVdntsP/exec";
         const GAS_SOAL_URL = "https://script.google.com/macros/s/AKfycbzb4HsZUIYH7WOMdejFYkr_sqWM6I-DrP3a_NI1n3mdeGS6qXrRIYzY-fNklPW4drzcUA/exec";
@@ -1034,7 +1034,7 @@
 
             console.warn('[PELANGGARAN UJIAN]', reason, new Date().toLocaleString());
             
-            // Mengirim status pelanggaran (Backend akan mengisi Kolom Pelanggaran secara terpisah)
+            // Mengirim status "terdeteksi pelanggran" (backend akan otomatis menghitung 1, 2, 3...)
             sendStudentStatus("terdeteksi pelanggran");
 
             playEmergencyAlarm();
@@ -1064,7 +1064,7 @@
                     overlay.classList.add('hidden');
                     isLockedOut = false;
                     
-                    // Setelah lockout selesai, kirim status Mengerjakan Soal kembali (Kolom Pelanggaran tidak terhapus)
+                    // Setelah lockout 2 menit selesai dan siswa kembali mengerjakan, status dikembalikan menjadi "Mengerjakan Soal"
                     sendStudentStatus("Mengerjakan Soal");
                 }
             }, 1000);
